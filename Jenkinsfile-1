@@ -1,0 +1,22 @@
+pipeline {
+    agent any 
+
+    stages {
+        stage('build'){
+            steps{
+                bat "mvn clean"
+            }
+        }
+        stage("deploy"){
+            steps{
+                bat "mvn test"
+            }
+        }
+        stage("unit testing"){
+            steps{
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
+            }
+        }
+    }
+}
